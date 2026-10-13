@@ -1,0 +1,3 @@
+[submodule "floof"]
+	path = floof
+	url = https://github.com/mk8-bruh/floof
