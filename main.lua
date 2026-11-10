@@ -3,4 +3,8 @@ floof = require "floof"
 Object = floof.object
 Object.initialize(arg)
 
-gameScene = require "scenes.game"
+Scene = require "classes.scene"
+
+GameScene = require "scenes.game"
+
+Scene.switch(GameScene())

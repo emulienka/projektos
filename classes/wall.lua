@@ -2,8 +2,9 @@ local Object = require "floof.object"
 
 local Wall = Object:class("Wall")
 
-function Wall:__init(x, y, w, h)
+function Wall:__init(scene, x, y, w, h)
     self.super.__init(self)
+    self.parent = scene
     
     self.x = x
     self.y = y

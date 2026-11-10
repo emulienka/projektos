@@ -3,8 +3,9 @@ local Object = require "floof.object"
 local Wall = require "classes.wall"
 local Player = Object:class("Player")
 
-function Player:__init(x, y)
+function Player:__init(scene, x, y)
     self.super.__init(self)
+    self.parent = scene
     self.z = 1
 
     self.x = x
@@ -12,14 +13,15 @@ function Player:__init(x, y)
     self.w = 50
     self.h = 50
     self.collisions = {}
+    self.speed = 200
 end
 
 function Player:update(dt)
     local px, py = self.x, self.y
-    if love.keyboard.isDown("w") then self.y = self.y - 200 * dt end
-    if love.keyboard.isDown("a") then self.x = self.x - 200 * dt end
-    if love.keyboard.isDown("s") then self.y = self.y + 200 * dt end
-    if love.keyboard.isDown("d") then self.x = self.x + 200 * dt end
+    if love.keyboard.isDown("w") then self.y = self.y - self.speed * dt end
+    if love.keyboard.isDown("a") then self.x = self.x - self.speed * dt end
+    if love.keyboard.isDown("s") then self.y = self.y + self.speed * dt end
+    if love.keyboard.isDown("d") then self.x = self.x + self.speed * dt end
     self.collisions = {}
     if self.parent then
         for sibling in self.parent:backToFront() do
@@ -63,6 +65,32 @@ function Player:draw()
         self.w,
         self.h
     )
+    love.graphics.setColor(0, 1, 0)
+    love.graphics.setLineWidth(2)
+    if self.collisions.left then
+        love.graphics.line(
+            self.x - self.w/2, self.y - self.h/2,
+            self.x - self.w/2, self.y + self.h/2
+        )
+    end
+    if self.collisions.right then
+        love.graphics.line(
+            self.x + self.w/2, self.y - self.h/2,
+            self.x + self.w/2, self.y + self.h/2
+        )
+    end
+    if self.collisions.up then
+        love.graphics.line(
+            self.x - self.w/2, self.y - self.h/2,
+            self.x + self.w/2, self.y - self.h/2
+        )
+    end
+    if self.collisions.down then
+        love.graphics.line(
+            self.x - self.w/2, self.y + self.h/2,
+            self.x + self.w/2, self.y + self.h/2
+        )
+    end
 end
 
 return Player
