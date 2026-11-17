@@ -1,10 +1,12 @@
 floof = require "floof"
 
 Object = floof.object
-Object.initialize(arg)
 
 Scene = require "classes.scene"
 
+MenuScene = require "scenes.menu"
 GameScene = require "scenes.game"
 
-Scene.switch(GameScene())
+Object.initialize(arg)
+
+Scene.switch(MenuScene())

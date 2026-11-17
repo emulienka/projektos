@@ -13,10 +13,10 @@ function Scene.switch(target, ...)
     end
     if target then
         Scene.current = target
-        target.activeSelf = false
-        target:call("enter", Scene.current, ...)
+        target.activeSelf = true
+        target:call("enter", previous, ...)
     end
-    previous:delete()
+    if previous then previous:delete() end
     for i, scene in Scene.stack:iterate() do
         scene:delete()
     end
@@ -31,7 +31,7 @@ function Scene.push(target, ...)
     end
     if target then
         Scene.current = target
-        target.activeSelf = false
+        target.activeSelf = true
         target:call("enter", previous, ...)
     end
     Scene.stack:push(previous)
@@ -49,7 +49,7 @@ function Scene.pop(...)
         target.activeSelf = true
         target:call("enter", previous, ...)
     end
-    previous:delete()
+    if previous then previous:delete() end
 end
 
 return Scene
